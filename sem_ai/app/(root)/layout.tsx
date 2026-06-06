@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Tree Plantation Live Tracking",
 };
 
-export default function RootLayout({~
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
