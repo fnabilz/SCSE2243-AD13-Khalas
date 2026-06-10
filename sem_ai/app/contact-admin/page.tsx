@@ -8,7 +8,7 @@ import { Mail, User, TreePine, Circle } from 'lucide-react';
 export default function Page() {
     return (
         /* Outer wrapper that stretches the space and perfectly centers the card */
-        <div className="flex flex-grow items-center justify-center px-4 py-12 bg-white">
+        <div className="flex grow items-center justify-center px-4 py-12 bg-white">
             <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-300/30 bg-slate-200/40 p-6 backdrop-blur-md shadow-xl text-slate-900">
         
                 {/* Card Header */}
