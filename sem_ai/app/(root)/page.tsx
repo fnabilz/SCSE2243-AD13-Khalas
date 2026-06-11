@@ -6,7 +6,7 @@ import '@/app/globals.css'
 
 export default function Page() {
     return (
-        <div className='flex min-h-screen flex-col' >
+        <div className='justify-center' >
             <div className='container mx-auto my-50 text-center'>
                 <p className='font-bold mb-3 text-5xl text-white'>
                     Tree Plantation Live Tracking Platform
