@@ -16,8 +16,6 @@ export default function Navbar() {
                     <li><Link href='/contact-admin'
                         className='rounded-xl p-4 hover:bg-blue-3 default:bg-blue-1 text-white'
                         >Contacts</Link></li>
-                   
-                    <li><Link href=''></Link></li>
                 </ul>
             </nav>
             <Image 
