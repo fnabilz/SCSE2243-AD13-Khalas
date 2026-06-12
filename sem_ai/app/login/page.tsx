@@ -21,7 +21,7 @@ export default function Page() {
                 </div>
 
                 {/* Form */}
-                <form className="mt-8 space-y-6" action="#" method="POST">
+                <form className="mt-8 space-y-6" action="/dashboard" method="POST">
                     <div className="space-y-4">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-zinc-900">
