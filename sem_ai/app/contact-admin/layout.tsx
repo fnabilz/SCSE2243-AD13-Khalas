@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Tree Plantation Live Tracking",
 };
 
-export default function AuthLayout({
+export default function ContactLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
