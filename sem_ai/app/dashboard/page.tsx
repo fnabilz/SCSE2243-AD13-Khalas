@@ -8,6 +8,8 @@ import {
   LogOut, 
   Bell, 
   Search,
+  FileInput,
+  FileChartLine,
   Plus,
   TrendingUp,
   ArrowUpRight
@@ -16,19 +18,19 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import '@/app/globals.css'
 import Image from 'next/image'
-import logo_image from '../../public/semai-logo-green.svg'
+import logo_image from '../../public/semai-logo.svg'
 
 export default function DashboardPage() {
   return (
     <div className='flex min-h-screen w-full bg-slate-50 text-slate-900 font-sans'>
       
       {/* 1. SIDEBAR */}
-      <aside className="fixed inset-y-0 left-0 z-20 flex w-64 flex-col border-r border-slate-200 bg-white">
+      <aside className="fixed inset-y-0 left-0 z-20 flex w-64 flex-col bg-blue-1">
         {/* Sidebar Header / Brand */}
-        <div className="flex h-16 items-center px-6 border-b border-slate-100">
+        <div className="flex h-16 items-center px-6 border-b border-blue-4">
             <div >
                 <Image 
-                    className='w-60 h-16 py-1.5'
+                    className='w-60 h-16 py-2'
                     src={logo_image}
                     width={120}
                     alt="Logo of the system"
@@ -37,61 +39,48 @@ export default function DashboardPage() {
         </div>
 
         {/* Navigation Links */}
-        <nav className="flex-1 space-y-1 px-4 py-6">
-          <Link href="#" className="flex items-center gap-3 rounded-lg bg-green-50 px-3 py-2.5 text-sm font-medium text-green-700 transition-colors">
-            <LayoutDashboard className="h-4 w-4" />
+        <nav className="flex-1 space-y-2 px-4 py-6">
+          <Link href="#" className="flex items-center gap-3 rounded-lg bg-blue-5 px-3 py-2.5 text-md font-medium text-white transition-colors">
+            <LayoutDashboard className="h-5 w-5" />
             Dashboard
           </Link>
-          <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
-            <BarChart3 className="h-4 w-4" />
+          <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium text-white hover:bg-slate-50 hover:text-slate-900 transition-colors">
+            <BarChart3 className="h-5 w-5" />
             Analytics
           </Link>
-          <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
-            <Users className="h-4 w-4" />
-            Team
+          <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium text-white hover:bg-slate-50 hover:text-slate-900 transition-colors">
+            <FileInput className="h-5 w-5" />
+            Submit Data
           </Link>
-          <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
-            <Import className="h-4 w-4" />
-            Data Imports
+          <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium text-white hover:bg-slate-50 hover:text-slate-900 transition-colors">
+            <FileChartLine className="h-5 w-5" />
+            Generate Report
           </Link>
-          <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
-            <Settings className="h-4 w-4" />
-            Settings
+          <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium text-white hover:bg-slate-50 hover:text-slate-900 transition-colors">
+            <Settings className="h-5 w-5" />
+            Manage KPI
           </Link>
         </nav>
 
         {/* Sidebar Footer */}
-        <div className="border-t border-slate-100 p-4">
-          <Link href="/login" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors">
-            <LogOut className="h-4 w-4" />
-            Sign Out
-          </Link>
-          <p className="mt-4 text-center text-xs text-gray-400 font-medium">
-            THE KHALAS© 2026
-          </p>
-        </div>
+        <p className="text-center text-xs text-gray-400 font-medium px-4 py-6">
+          THE KHALAS© 2026
+        </p>
       </aside>
 
       {/* 2. MAIN CONTENT AREA */}
       <div className="flex flex-1 flex-col pl-64">
         
         {/* Top Navbar */}
-        <header className="sticky top-0 z-10 flex h-16 w-full items-center justify-between border-b border-slate-200 bg-white px-8">
-          {/* Search bar mockup */}
-          <div className="relative w-72">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-            <input 
-              type="text" 
-              placeholder="Search anything..." 
-              className="w-full rounded-lg border border-slate-200 bg-slate-50 py-1.5 pl-9 pr-4 text-sm outline-none transition-all focus:border-green-500 focus:ring-1 focus:ring-green-500"
-            />
-          </div>
+        <header className="sticky top-0 z-10 flex h-16 w-full items-center justify-end border-b border-slate-200 bg-white px-8">
+         
 
           {/* Right Header Controls */}
-          <div className="flex items-center gap-4">
-            <button className="relative rounded-full p-1.5 text-slate-400 hover:bg-slate-50 hover:text-slate-600">
-              <Bell className="h-5 w-5" />
-              <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-green-600"></span>
+          <div className="flex items gap-4">
+            <button className="relative rounded-full p-1.5 text-red-600 hover:bg-slate-50 hover:text-slate-600">
+              <Link href="/">
+                <LogOut className="h-5 w-5" />
+              </Link>
             </button>
             <div className="h-8 w-px bg-slate-200"></div>
             
@@ -110,7 +99,7 @@ export default function DashboardPage() {
 
         {/* Dashboard Main Workspace */}
         <main className="flex-1 p-8 space-y-8 max-w-7xl w-full mx-auto">
-          
+
           {/* Welcome / Action Banner Header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
@@ -128,7 +117,7 @@ export default function DashboardPage() {
           </div>
 
           {/* 3. METRIC CARDS ROW */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {/* Card 1 */}
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
               <div className="flex items-center justify-between">
