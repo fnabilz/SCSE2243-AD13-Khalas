@@ -1,0 +1,358 @@
+"use client"
+
+import { 
+  ArrowRight, 
+  LogOut, 
+  Plus,
+  TrendingUp,
+  ArrowUpRight,
+  FileBarChart,
+  BarChart3,
+} from 'lucide-react'
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ReferenceLine,
+} from "recharts";
+import { Button } from '@/components/ui/button'
+import '@/app/globals.css'
+import { useState } from 'react'
+import { progressData } from '@/data/charts'
+import { districts, districtData, districtProgressData } from '@/data/districts'
+
+
+export default function DashboardPage() {
+  const [activeView, setActiveView] = useState<
+    "dashboard" | "reports" | "targets" | "export"
+  >("dashboard");
+
+  // For chart mock data
+  const [selectedDistrict, setSelectedDistrict] =
+    useState<string>("all");
+
+  const selectedDistrictData =
+    selectedDistrict !== "all"
+      ? districtData.find(
+          (d) => d.district === selectedDistrict,
+        )
+      : null;
+
+    const chartData =
+    selectedDistrict !== "all" &&
+    districtProgressData[selectedDistrict]
+      ? districtProgressData[selectedDistrict]
+      : progressData;
+
+    const getStatusColor = (status: string) => {
+    switch (status) {
+      case "on-track":
+        return "bg-green-100 text-green-800";
+      case "at-risk":
+        return "bg-yellow-100 text-yellow-800";
+      case "delayed":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  return (
+
+    <div className='flex flex-col min-h-screen w-full'>
+      
+      {/* Dashboard Main Workspace */}
+      <main className="flex-1 p-8 space-y-8 w-full bg-slate-50 ">
+
+        {/* Welcome / Action Banner Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Dashboard</h1>
+            <p className="text-sm text-slate-500 mt-1">Welcome back! Here is a summary of SemAI's system health today.</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <Button className="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-medium">
+              <Plus className="h-4 w-4" /> Create Report
+            </Button>
+          </div>
+        </div>
+
+        {/* 3. METRIC CARDS ROW */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Card 1 */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-slate-500">Total Planted (Statewide)</span>
+              <span className="flex items-center gap-0.5 text-xs font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
+                <TrendingUp className="h-3 w-3" /> +12%
+              </span>
+            </div>
+            <div className="mt-4 flex items-baseline gap-2">
+              <span className="text-3xl font-bold tracking-tight text-zinc-900">698,000</span>
+            </div>
+          </div>
+
+          {/* Card 2 */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-slate-500">Current Progress %</span>
+              <span className="flex items-center gap-0.5 text-xs font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
+                <TrendingUp className="h-3 w-3" /> +4.3%
+              </span>
+            </div>
+            <div className="mt-4 flex items-baseline gap-2">
+              <span className="text-3xl font-bold tracking-tight text-zinc-900">69.8%</span>
+            </div>
+          </div>
+
+          {/* Card 3 */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-slate-500">Avg District Target</span>
+              <BarChart3 className="w-5 h-5 text-purple-500" />
+            </div>
+            <div className="mt-4 flex items-baseline gap-2">
+              <span className="text-3xl font-bold tracking-tight text-zinc-900">66.8%</span>
+            </div>
+          </div>
+
+          {/* Card 4 */}
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-slate-500">AI Predictive Completion</span>
+              <span className="text-xs font-medium text-red-600 bg-red-50 px-2 py-0.5 rounded-full">-2.4%</span>
+            </div>
+            <div className="mt-4 flex items-baseline gap-2">
+              <span className="text-3xl font-bold tracking-tight text-zinc-900">Oct 16</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Burn-up Chart */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-800">
+              {selectedDistrict === "all"
+                ? "Johor Statewide Progress Timeline"
+                : `${selectedDistrict} - Progress Timeline`}
+            </h3>
+            <div className="w-64">
+              <select
+                value={selectedDistrict}
+                onChange={(e) =>
+                  setSelectedDistrict(e.target.value)
+                }
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+              >
+                <option value="all">
+                  All Districts (Statewide)
+                </option>
+                {districts.map((district) => (
+                  <option key={district} value={district}>
+                    {district}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <ResponsiveContainer width="100%" height={350}>
+            <LineChart data={chartData}>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="#e5e7eb"
+              />
+              <XAxis dataKey="month" stroke="#6b7280" />
+              <YAxis
+                stroke="#6b7280"
+                tickFormatter={(value) =>
+                  `${(value / 1000).toFixed(0)}k`
+                }
+              />
+              <Tooltip
+                formatter={(value: any) =>
+                  value ? value.toLocaleString() : "N/A"
+                }
+                labelFormatter={(label) =>
+                  `Month: ${label}`
+                }
+              />
+              <Legend />
+              <ReferenceLine
+                x="Apr"
+                stroke="#ef4444"
+                strokeDasharray="3 3"
+                label="Current Date"
+              />
+              <Line
+                key="goal-line"
+                type="monotone"
+                dataKey="goal"
+                stroke="#3b82f6"
+                strokeWidth={2}
+                name="Goal Line"
+                dot={false}
+              />
+              <Line
+                key="actual-line"
+                type="monotone"
+                dataKey="actual"
+                stroke="#10b981"
+                strokeWidth={3}
+                name="Actual Planted"
+                connectNulls={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+          {/* District Performance Table + Gemini Insight */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-800">
+                  District Performance & Projections
+                </h3>
+                <p className="text-xs text-gray-500 italic">
+                  Click a district to view its progress
+                </p>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-200">
+                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
+                        District
+                      </th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
+                        Annual Target
+                      </th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
+                        Trees Planted
+                      </th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
+                        Status
+                      </th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
+                        Est. Completion
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {districtData.map((district, index) => (
+                      <tr
+                        key={index}
+                        onClick={() =>
+                          setSelectedDistrict(
+                            district.district,
+                          )
+                        }
+                        className={`border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition ${
+                          selectedDistrict ===
+                          district.district
+                            ? "bg-blue-50 border-l-4 border-l-blue-600"
+                            : ""
+                        }`}
+                      >
+                        <td className="py-3 px-4 font-medium text-gray-800">
+                          {district.district}
+                        </td>
+                        <td className="py-3 px-4 text-gray-600">
+                          {district.target.toLocaleString()}
+                        </td>
+                        <td className="py-3 px-4 text-gray-600">
+                          {district.planted.toLocaleString()}
+                        </td>
+                        <td className="py-3 px-4">
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(district.status)}`}
+                          >
+                            {district.status === "on-track"
+                              ? "On Track"
+                              : district.status ===
+                                  "at-risk"
+                                ? "At Risk"
+                                : "Delayed"}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 text-gray-600 text-sm">
+                          {district.completion}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Gemini Insight Card */}
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-sm border border-blue-200 p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <svg
+                    className="w-5 h-5 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-gray-800">
+                  Gemini Insights
+                </h3>
+              </div>
+
+              <div className="space-y-4">
+                <div className="bg-white rounded-lg p-4 border border-blue-100">
+                  <p className="text-sm font-medium text-gray-800 mb-2">
+                    🎯 Key Observation
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    MDKS (Kluang) is significantly behind
+                    target at 28.6% completion. Immediate
+                    intervention recommended.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg p-4 border border-blue-100">
+                  <p className="text-sm font-medium text-gray-800 mb-2">
+                    ⚠️ Bottleneck Alert
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    MDS (Segamat) showing slower pace in Q2.
+                    Weather delays and staffing gaps
+                    identified.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg p-4 border border-blue-100">
+                  <p className="text-sm font-medium text-gray-800 mb-2">
+                    ✅ Positive Trend
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    MBJB and MPM maintaining excellent pace.
+                    Consider resource reallocation to
+                    struggling districts.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-lg p-4 border border-blue-100">
+                  <p className="text-sm font-medium text-gray-800 mb-2">
+                    📊 State Forecast
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    At current pace, state target achievable
+                    by Oct 14, 2026. 94% confidence level.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </main>
+    </div>
+  )
+}
