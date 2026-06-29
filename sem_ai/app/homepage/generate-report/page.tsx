@@ -60,10 +60,11 @@ export default function ReportsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto h-full flex flex-col lg:flex-row gap-6">
+      {/* 1. Expanded the main container width to max-w-[1600px] */}
+      <div className="max-w-[1600px] mx-auto h-full flex flex-col lg:flex-row gap-6">
 
-        {/* Parameters Panel */}
-        <div className="w-full lg:w-1/3 bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-fit">
+        {/* 2. Left Panel: Changed from lg:w-1/3 to a fixed max width to give the table more room */}
+        <div className="w-full lg:w-[320px] xl:w-[360px] flex-shrink-0 bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-fit">
           <div className="flex items-center gap-2 mb-6">
             <FileBarChart className="w-6 h-6 text-blue-600" />
             <h3 className="text-xl font-semibold text-gray-800">
@@ -178,10 +179,9 @@ export default function ReportsPage() {
           </form>
         </div>
 
-        {/* Dynamic Display Panel (Right Side) */}
-        <div className="w-full lg:w-2/3 bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col justify-between min-h-[450px]">
+        {/* 3. Right Panel: Changed to flex-1 so it dynamically fills all remaining width */}
+        <div className="flex-1 bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 flex flex-col justify-between min-h-[450px] overflow-hidden">
           {!hasPreview && !isGenerating ? (
-            /* Empty State Container */
             <div className="flex-1 flex flex-col items-center justify-center text-center p-8 my-auto">
               <div className="p-4 bg-blue-50 rounded-full text-blue-600 mb-4">
                 <FileBarChart className="w-8 h-8" />
@@ -192,18 +192,15 @@ export default function ReportsPage() {
               </p>
             </div>
           ) : isGenerating ? (
-            /* Loading State Display */
             <div className="flex-1 flex flex-col items-center justify-center text-center p-8 my-auto">
               <Loader2 className="w-10 h-10 text-blue-600 animate-spin mb-4" />
               <p className="text-sm font-medium text-gray-600">Querying database registers...</p>
               <p className="text-xs text-gray-400 mt-1">Parsing environmental metrics & performance KPIs</p>
             </div>
           ) : (
-            /* Active Live Data Preview Grid */
-            <div className="flex-1 flex flex-col justify-between bg-[#0a0a0a] p-4 sm:p-8 font-sans min-h-screen">
-
-              {/* Header / Title Section */}
-              <div className="text-center mb-6 text-white space-y-1">
+            <div className="flex-1 flex flex-col justify-between bg-white p-4 sm:p-8 font-sans rounded-lg">
+              
+              <div className="text-center mb-6 text-black space-y-1">
                 <h2 className="text-base sm:text-lg font-bold tracking-wide uppercase">
                   STATUS PROGRAM MENANAM POKOK OLEH PIHAK BERKUASA TEMPATAN NEGERI JOHOR<br />
                   BAGI SUKU TAHUN PERTAMA 2025
@@ -213,37 +210,32 @@ export default function ReportsPage() {
                 </p>
               </div>
 
-              {/* Table Container */}
-              <div className="w-full overflow-x-auto shadow-2xl">
-                <table className="w-full min-w-[800px] border-collapse border border-gray-300 text-sm">
-
-                  {/* Olive Header */}
-                  <thead className="bg-[#545033] text-white">
+              {/* 4. Removed strict min-w-[800px] and let the browser auto-size the table */}
+              <div className="w-full overflow-x-auto shadow-2xl pb-4">
+                <table className="w-full border-collapse border border-gray-300 text-sm whitespace-nowrap xl:whitespace-normal">
+                  <thead className="bg-white text-black">
                     <tr>
-                      <th className="border border-gray-300 p-3 font-semibold text-center align-middle w-12">BIL</th>
-                      <th className="border border-gray-300 p-3 font-semibold text-center align-middle w-40">DAERAH</th>
-                      <th className="border border-gray-300 p-3 font-semibold text-center align-middle">PIHAK BERKUASA TEMPATAN<br />(PBT)</th>
+                      <th className="border border-gray-300 px-2 py-3 font-semibold text-center align-middle w-10">BIL</th>
+                      <th className="border border-gray-300 px-2 py-3 font-semibold text-center align-middle">DAERAH</th>
+                      <th className="border border-gray-300 px-3 py-3 font-semibold text-left align-middle">PIHAK BERKUASA TEMPATAN<br />(PBT)</th>
                       
-                      {/* Dynamically Rendered Headers */}
                       {metrics.targetProjections && (
-                        <th className="border border-gray-300 p-3 font-semibold text-center align-middle w-32">SASARAN<br />TAHUNAN 2025</th>
+                        <th className="border border-gray-300 px-2 py-3 font-semibold text-center align-middle">SASARAN<br />TAHUNAN 2025</th>
                       )}
                       {metrics.totalTrees && (
-                        <th className="border border-gray-300 p-3 font-semibold text-center align-middle w-40">JUMLAH POKOK YANG<br />TELAH DITANAM</th>
+                        <th className="border border-gray-300 px-2 py-3 font-semibold text-center align-middle">JUMLAH POKOK YANG<br />TELAH DITANAM</th>
                       )}
                       {metrics.agencyPerformance && (
-                        <th className="border border-gray-300 p-3 font-semibold text-center align-middle w-28">PERATUS %</th>
+                        <th className="border border-gray-300 px-2 py-3 font-semibold text-center align-middle">PERATUS %</th>
                       )}
                       {metrics.speciesBreakdown && (
-                        <th className="border border-gray-300 p-3 font-semibold text-center align-middle w-32">SPESIS<br />UTAMA</th>
+                        <th className="border border-gray-300 px-2 py-3 font-semibold text-center align-middle">SPESIS<br />UTAMA</th>
                       )}
                     </tr>
                   </thead>
 
-                  {/* Dark Body */}
-                  <tbody className="bg-black text-white">
-
-                    {/* 1. Johor Bahru (Rowspan 3) */}
+                  <tbody className="bg-white text-black">
+                    {/* Johor Bahru */}
                     <tr>
                       <td className="border border-gray-300 p-2 text-center" rowSpan={3}>1.</td>
                       <td className="border border-gray-300 p-2 uppercase" rowSpan={3}>JOHOR BAHRU</td>
@@ -268,7 +260,7 @@ export default function ReportsPage() {
                       {metrics.speciesBreakdown && <td className="border border-gray-300 p-2 text-center">Tabebuia</td>}
                     </tr>
 
-                    {/* 2. Muar */}
+                    {/* Muar */}
                     <tr>
                       <td className="border border-gray-300 p-2 text-center">2.</td>
                       <td className="border border-gray-300 p-2 uppercase">MUAR</td>
@@ -279,7 +271,7 @@ export default function ReportsPage() {
                       {metrics.speciesBreakdown && <td className="border border-gray-300 p-2 text-center">-</td>}
                     </tr>
 
-                    {/* 3. Batu Pahat (Rowspan 2) */}
+                    {/* Batu Pahat */}
                     <tr>
                       <td className="border border-gray-300 p-2 text-center" rowSpan={2}>3.</td>
                       <td className="border border-gray-300 p-2 uppercase" rowSpan={2}>BATU PAHAT</td>
@@ -297,7 +289,7 @@ export default function ReportsPage() {
                       {metrics.speciesBreakdown && <td className="border border-gray-300 p-2 text-center">Kelat Paya</td>}
                     </tr>
 
-                    {/* 4. Kluang (Rowspan 2) */}
+                    {/* Kluang */}
                     <tr>
                       <td className="border border-gray-300 p-2 text-center" rowSpan={2}>4.</td>
                       <td className="border border-gray-300 p-2 uppercase" rowSpan={2}>KLUANG</td>
@@ -315,7 +307,7 @@ export default function ReportsPage() {
                       {metrics.speciesBreakdown && <td className="border border-gray-300 p-2 text-center">Merawan</td>}
                     </tr>
 
-                    {/* 5. Segamat (Rowspan 2) */}
+                    {/* Segamat */}
                     <tr>
                       <td className="border border-gray-300 p-2 text-center" rowSpan={2}>5.</td>
                       <td className="border border-gray-300 p-2 uppercase" rowSpan={2}>SEGAMAT</td>
@@ -333,7 +325,7 @@ export default function ReportsPage() {
                       {metrics.speciesBreakdown && <td className="border border-gray-300 p-2 text-center">Bucida</td>}
                     </tr>
 
-                    {/* 6. Pontian */}
+                    {/* Pontian */}
                     <tr>
                       <td className="border border-gray-300 p-2 text-center">6.</td>
                       <td className="border border-gray-300 p-2 uppercase">PONTIAN</td>
@@ -344,7 +336,7 @@ export default function ReportsPage() {
                       {metrics.speciesBreakdown && <td className="border border-gray-300 p-2 text-center">Merawan</td>}
                     </tr>
 
-                    {/* 7. Kota Tinggi (Rowspan 2) */}
+                    {/* Kota Tinggi */}
                     <tr>
                       <td className="border border-gray-300 p-2 text-center" rowSpan={2}>7.</td>
                       <td className="border border-gray-300 p-2 uppercase" rowSpan={2}>KOTA TINGGI</td>
@@ -362,7 +354,7 @@ export default function ReportsPage() {
                       {metrics.speciesBreakdown && <td className="border border-gray-300 p-2 text-center">Bucida</td>}
                     </tr>
 
-                    {/* 8. Mersing */}
+                    {/* Mersing */}
                     <tr>
                       <td className="border border-gray-300 p-2 text-center">8.</td>
                       <td className="border border-gray-300 p-2 uppercase">MERSING</td>
@@ -373,7 +365,7 @@ export default function ReportsPage() {
                       {metrics.speciesBreakdown && <td className="border border-gray-300 p-2 text-center">Ketapang</td>}
                     </tr>
 
-                    {/* 9. Kulai */}
+                    {/* Kulai */}
                     <tr>
                       <td className="border border-gray-300 p-2 text-center">9.</td>
                       <td className="border border-gray-300 p-2 uppercase">KULAI</td>
@@ -384,7 +376,7 @@ export default function ReportsPage() {
                       {metrics.speciesBreakdown && <td className="border border-gray-300 p-2 text-center">Tecoma</td>}
                     </tr>
 
-                    {/* 10. Tangkak */}
+                    {/* Tangkak */}
                     <tr>
                       <td className="border border-gray-300 p-2 text-center">10.</td>
                       <td className="border border-gray-300 p-2 uppercase">TANGKAK</td>
@@ -405,14 +397,12 @@ export default function ReportsPage() {
                       {metrics.agencyPerformance && <td className="border border-gray-300 p-2 text-center font-bold text-[#3b82f6]">8.93%</td>}
                       {metrics.speciesBreakdown && <td className="border border-gray-300 p-2 text-center font-bold">-</td>}
                     </tr>
-
                   </tbody>
                 </table>
               </div>
             </div>
           )}
         </div>
-
       </div>
     </div>
   );
