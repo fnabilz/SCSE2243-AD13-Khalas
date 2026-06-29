@@ -3,7 +3,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ## Project Setup
 ```bash
 cd sem_ai
-npm i next@latest react@latest react-dom@latest
+npm install
 ```
 
 ## Getting Started
