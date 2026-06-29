@@ -1,6 +1,9 @@
+'use client'
+
 import Link from 'next/link'
-import '@/app/globals.css'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
+
 import { 
   LayoutDashboard, 
   BarChart3, 
@@ -8,8 +11,19 @@ import {
   FileInput,
   FileChartLine,
 } from 'lucide-react'
+import '@/app/globals.css'
+
+const navItems = [
+  { name: 'Dashboard', href: '/homepage/dashboard', icon: LayoutDashboard },
+  { name: 'Analytics', href: '/homepage/analytics', icon: BarChart3 },
+  { name: 'Submit Data', href: '/homepage/submit-data', icon: FileInput },
+  { name: 'Generate Report', href: '/homepage/generate-report', icon: FileChartLine },
+  { name: 'Manage KPI', href: '/homepage/manage-kpi', icon: Settings },
+]
 
 export default function Sidebar() {
+    const pathname = usePathname()
+
     return (
       <aside className="fixed inset-y-0 left-0 z-20 flex w-64 flex-col bg-blue-1">
         {/* Sidebar Header / Brand */}
@@ -17,37 +31,38 @@ export default function Sidebar() {
             <div>
                 <Image 
                     className="w-60 h-16 py-2"
-                    src="/semai-logo.svg" // ✅ FIXED: Direct path from the public folder root
+                    src="/semai-logo.svg"
                     width={120}
-                    height={64}          // ✅ FIXED: Added mandatory height prop to prevent layout shifts
+                    height={64}          
                     alt="Logo of the system"
-                    priority             // ✅ OPTIMIZATION: Helps load above-the-fold brand assets faster
+                    priority             
                 />
             </div>
         </div>
 
         {/* Navigation Links */}
         <nav className="flex-1 space-y-2 px-4 py-6">
-          <Link href="/homepage/dashboard" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium text-white hover:bg-slate-50 hover:text-slate-900 transition-colors">
-            <LayoutDashboard className="h-5 w-5" />
-            Dashboard
-          </Link>
-          <Link href="/homepage/analytics" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium text-white hover:bg-slate-50 hover:text-slate-900 transition-colors">
-            <BarChart3 className="h-5 w-5" />
-            Analytics
-          </Link>
-          <Link href="/homepage/submit-data" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium text-white hover:bg-slate-50 hover:text-slate-900 transition-colors">
-            <FileInput className="h-5 w-5" />
-            Submit Data
-          </Link>
-          <Link href="/homepage/generate-report" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium text-white hover:bg-slate-50 hover:text-slate-900 transition-colors">
-            <FileChartLine className="h-5 w-5" />
-            Generate Report
-          </Link>
-          <Link href="/homepage/manage-kpi" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium text-white hover:bg-slate-50 hover:text-slate-900 transition-colors">
-            <Settings className="h-5 w-5" />
-            Manage KPI
-          </Link>
+          {
+            (navItems.map((page) => {
+              const Icon = page.icon
+              const isActive = pathname === page.href || pathname.startsWith(`${page.href}/`)
+
+              return (
+                <Link 
+                  key={page.name}
+                  href={page.href} 
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-md font-medium transition-colors ${
+                    isActive 
+                      ? 'text-white bg-white/25' // ACTIVE STYLE
+                      : 'text-white hover:bg-slate-50 hover:text-slate-900'      // INACTIVE STYLE
+                  }`}
+                >
+                  <Icon className={`h-5 w-5`} />
+                  {page.name}
+                </Link>
+              )
+            }))
+          }
         </nav>
 
         {/* Sidebar Footer */}
