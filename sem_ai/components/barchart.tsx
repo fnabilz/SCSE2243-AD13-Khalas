@@ -1,4 +1,6 @@
-import React from 'react';
+"use client"
+
+import React, { useState, useEffect } from 'react';
 import {
     BarChart,
     Bar, 
@@ -9,32 +11,47 @@ import {
     Legend, 
     ResponsiveContainer
 } from 'recharts';
-
-type ChartData = {
-    name: string;
-    value: number;
-};
-
-const data: ChartData[] = [
-    { name: 'Page A', value: 400 },
-    { name: 'Page B', value: 200 },
-    { name: 'Page C', value: 500 },
-    { name: 'Page D', value: 129 },
-    { name: 'Page E', value: 322 },
-];
+import { districtData } from '@/data/districts';
 
 const BarChartComponent: React.FC = () => {
+    const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => { setIsMounted(true); }, []);
+
+    const data = districtData.map((d) => ({
+        name: d.district,
+        planted: d.planted,
+        target: d.target
+    }))
+
     return (
-        <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="value" fill="#8884d8" />
-            </BarChart>
-        </ResponsiveContainer>
+        <div className="rounded 2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                District Planted vd Target
+            </h3>
+            <div style={{ width: "100%", height: 350 }}>
+                {isMounted && (
+                    <ResponsiveContainer width="100%" height={400}>
+                        <BarChart data={data} margin={{ top: 5, right: 20, left: 20, bottom: 60 }}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="e5e7eb" />
+                            <XAxis 
+                                dataKey="name"
+                                stroke="#6b7280"
+                                tick={{ fontSize: 11}}
+                                angle={-35}
+                                textAnchor="end"
+                            />
+                            <YAxis 
+                                stroke="#6b7280"
+                                tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
+                            />
+                            <Tooltip formatter={(v: any) => v.toLocaleString()} />
+                            <Bar dataKey="target" fill="#e2e8f0" name="Target" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="planted" fill="#10b981" name="Planted" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                )}
+            </div>
+        </div>
     );
 };
 
