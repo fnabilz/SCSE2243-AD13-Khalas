@@ -27,7 +27,7 @@ export default function Sidebar() {
     return (
       <aside className="fixed inset-y-0 left-0 z-20 flex w-64 flex-col bg-blue-1">
         {/* Sidebar Header / Brand */}
-        <div className="flex h-16 items-center px-6 border-b border-blue-4">
+        <div className="flex h-16 items-center px-6 mt-3">
             <div>
                 <Image 
                     className="w-60 h-16 py-2"
@@ -41,7 +41,7 @@ export default function Sidebar() {
         </div>
 
         {/* Navigation Links */}
-        <nav className="flex-1 space-y-2 px-4 py-6">
+        <nav className="flex-1 space-y-2 px-4 py-3">
           {
             (navItems.map((page) => {
               const Icon = page.icon
