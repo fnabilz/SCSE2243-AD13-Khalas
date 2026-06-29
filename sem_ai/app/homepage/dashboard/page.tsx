@@ -20,7 +20,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/button'
 import '@/app/globals.css'
 import { useState } from 'react'
 import { progressData } from '@/data/charts'

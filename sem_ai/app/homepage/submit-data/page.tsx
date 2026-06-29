@@ -1,7 +1,7 @@
 "use client"
 
 import { Plus, Upload } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/button'
 
 export default function SubmitReportPage() {
   const steps = ["Zone", "Agency", "Species", "Quantity", "Date"]

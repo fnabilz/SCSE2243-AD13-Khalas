@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Sidebar from "@/components/sidebar/sidebar";
-import TopBar from "@/components/topbar/topbar";
+import Sidebar from "@/components/sidebar";
+import TopBar from "@/components/topbar";
 
 export const metadata: Metadata = {
   title: "SemAI",

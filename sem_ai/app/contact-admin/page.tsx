@@ -1,6 +1,6 @@
 
 import { ArrowRight, Import} from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/button'
 import Link from 'next/link'
 import '@/app/globals.css'
 import { Mail, User, TreePine, Circle } from 'lucide-react';
