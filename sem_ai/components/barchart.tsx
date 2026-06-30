@@ -24,15 +24,15 @@ const BarChartComponent: React.FC = () => {
     }))
 
     return (
-        <div className="rounded 2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                District Planted vd Target
+                District Planted vs Target
             </h3>
-            <div style={{ width: "100%", height: 350 }}>
+            <div style={{ width: "100%", height: 600 }}>
                 {isMounted && (
-                    <ResponsiveContainer width="100%" height={400}>
-                        <BarChart data={data} margin={{ top: 5, right: 20, left: 20, bottom: 60 }}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="e5e7eb" />
+                    <ResponsiveContainer width="100%" height={600}>
+                        <BarChart data={data} margin={{ top: 0, right: 20, left: 20, bottom: 80 }}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                             <XAxis 
                                 dataKey="name"
                                 stroke="#6b7280"
@@ -45,8 +45,9 @@ const BarChartComponent: React.FC = () => {
                                 tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
                             />
                             <Tooltip formatter={(v: any) => v.toLocaleString()} />
-                            <Bar dataKey="target" fill="#e2e8f0" name="Target" radius={[4, 4, 0, 0]} />
+                            <Bar dataKey="target" fill="#a9a9a9" name="Target" radius={[4, 4, 0, 0]} />
                             <Bar dataKey="planted" fill="#10b981" name="Planted" radius={[4, 4, 0, 0]} />
+                            <Legend verticalAlign="top" align="right" wrapperStyle={{ paddingTop: "40px" }}/>
                         </BarChart>
                     </ResponsiveContainer>
                 )}
