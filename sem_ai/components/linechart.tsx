@@ -111,3 +111,5 @@ const LineChartComponent = () => {
         </div>
     )
 }
+
+export default LineChartComponent;
