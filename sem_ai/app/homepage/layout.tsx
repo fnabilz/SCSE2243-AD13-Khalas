@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Sidebar from "@/components/sidebar";
 import TopBar from "@/components/topbar";
+import ChatFAB from "@/components/ai-chatbot";
 
 export const metadata: Metadata = {
   title: "SemAI",
@@ -22,6 +23,7 @@ export default function HomepageLayout({
           <div className="pl-64 min-h-screen flex flex-col">
             <TopBar />
             {children}
+            <ChatFAB />
           </div>
       </body>
     </html>
