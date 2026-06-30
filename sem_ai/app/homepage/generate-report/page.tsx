@@ -60,6 +60,13 @@ export default function ReportsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Generate Report</h1>
+          <p className="text-sm text-slate-500 mt-1 pb-8">Generate report based on existing analysis.</p>
+        </div>
+      </div>
+      
       {/* 1. Expanded the main container width to max-w-[1600px] */}
       <div className="max-w-[1600px] mx-auto h-full flex flex-col lg:flex-row gap-6">
 
@@ -211,7 +218,7 @@ export default function ReportsPage() {
               </div>
 
               {/* 4. Removed strict min-w-[800px] and let the browser auto-size the table */}
-              <div className="w-full overflow-x-auto shadow-2xl pb-4">
+              <div className="w-full overflow-x-auto pb-4">
                 <table className="w-full border-collapse border border-gray-300 text-sm whitespace-nowrap xl:whitespace-normal">
                   <thead className="bg-white text-black">
                     <tr>

@@ -81,7 +81,7 @@ export default function DashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Dashboard</h1>
-            <p className="text-sm text-slate-500 mt-1">Welcome back! Here is a summary of SemAI's system health today.</p>
+            <p className="text-sm text-slate-500 mt-1">Welcome back! Here is the overview of the campaign's progress.</p>
           </div>
         </div>
 
