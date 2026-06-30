@@ -40,7 +40,7 @@ const ChatFAB: React.FC = () => {
                 <div className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 h-[28rem] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-in slide-in-from-bottom-4 duration-200">
                     {/* Header */}
                     <div className="flex items-center justify-between px-4 py-3 bg-blue-1 text-white">
-                        <span className="font-semibold text-sm">AI Chat Assistant</span>
+                        <span className="font-semibold text-sm">SemAI Assistant</span>
                         <button
                             onClick={() => setIsOpen(false)}
                             className="hover:bg-white/10 rounded-full p-1 transition-colors"
