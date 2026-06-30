@@ -28,7 +28,7 @@ export default function ManageKPIs() {
 
   // Inline configuration adjustment state handlers
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [editTargetValue, setEditTargetValue] = useState<string>('0'); // Changed to string to handle clean input updates
+  const [editTargetValue, setEditTargetValue] = useState<string>('0'); 
 
   const handleStartEdit = (id: string, initialValue: number) => {
     setEditingId(id);
@@ -101,34 +101,33 @@ export default function ManageKPIs() {
                       {/* District Column */}
                       <td className="py-4 px-6 font-bold text-gray-900">{kpi.district}</td>
                       
-                      {/* Target Planted Column */}
+                      {/* Target Planted Column (Inline Input Field Here Now) */}
                       <td className="py-4 px-6 text-slate-700 font-medium">
-                        {kpi.targetValue.toLocaleString()} {kpi.unit}
+                        {editingId === kpi.id ? (
+                          <span className="inline-flex items-center gap-1 bg-white p-0.5 border border-blue-400 rounded shadow-sm">
+                            <input
+                              type="number"
+                              value={editTargetValue}
+                              onChange={(e) => setEditTargetValue(e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') handleSaveEdit(kpi.id);
+                              }}
+                              className="w-24 p-0.5 rounded text-xs outline-none font-semibold text-zinc-900"
+                              autoFocus
+                            />
+                            <span className="text-gray-500 pr-1 text-xs">{kpi.unit}</span>
+                          </span>
+                        ) : (
+                          <span>{kpi.targetValue.toLocaleString()} {kpi.unit}</span>
+                        )}
                       </td>
                       
-                      {/* Progress Bar Column */}
+                      {/* Progress Bar Column (Clean, Non-editing view that syncs automatically) */}
                       <td className="py-4 px-6">
                         <div className="w-full max-w-md space-y-1.5">
                           <div className="flex items-center justify-between text-xs">
                             <span className="text-gray-500 font-medium">
-                              {kpi.currentValue.toLocaleString()} / {' '}
-                              {editingId === kpi.id ? (
-                                <span className="inline-flex items-center gap-1 bg-white p-0.5 border border-blue-400 rounded shadow-sm">
-                                  <input
-                                    type="number"
-                                    value={editTargetValue}
-                                    onChange={(e) => setEditTargetValue(e.target.value)}
-                                    onKeyDown={(e) => {
-                                      if (e.key === 'Enter') handleSaveEdit(kpi.id);
-                                    }}
-                                    className="w-20 p-0.5 rounded text-xs outline-none font-semibold text-zinc-900"
-                                    autoFocus
-                                  />
-                                  <span className="text-gray-500 pr-1 text-xs">{kpi.unit}</span>
-                                </span>
-                              ) : (
-                                <span>{kpi.targetValue.toLocaleString()} {kpi.unit}</span>
-                              )}
+                              {kpi.currentValue.toLocaleString()} / {kpi.targetValue.toLocaleString()} {kpi.unit}
                             </span>
                             
                             <span className={`font-semibold flex items-center gap-1 text-sm ${isLowProgress ? 'text-rose-600' : 'text-zinc-800'}`}>
