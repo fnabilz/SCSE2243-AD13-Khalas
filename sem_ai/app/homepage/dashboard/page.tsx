@@ -22,12 +22,16 @@ import {
 } from "recharts";
 import { Button } from '@/components/button'
 import '@/app/globals.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { progressData } from '@/data/charts'
 import { districts, districtData, districtProgressData } from '@/data/districts'
+import BarChartComponent from '@/components/barchart';
 
 
 export default function DashboardPage() {
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => { setIsMounted(true); }, []);
+
   const [activeView, setActiveView] = useState<
     "dashboard" | "reports" | "targets" | "export"
   >("dashboard");
@@ -61,6 +65,9 @@ export default function DashboardPage() {
         return "bg-gray-100 text-gray-800";
     }
   };
+
+  console.log("chartData:", chartData);
+  console.log("progressData:", progressData);
 
   return (
 
@@ -160,137 +167,68 @@ export default function DashboardPage() {
               </select>
             </div>
           </div>
-          <ResponsiveContainer width="100%" height={350}>
-            <LineChart data={chartData}>
-              <CartesianGrid
-                strokeDasharray="3 3"
-                stroke="#e5e7eb"
-              />
-              <XAxis dataKey="month" stroke="#6b7280" />
-              <YAxis
-                stroke="#6b7280"
-                tickFormatter={(value) =>
-                  `${(value / 1000).toFixed(0)}k`
-                }
-              />
-              <Tooltip
-                formatter={(value: any) =>
-                  value ? value.toLocaleString() : "N/A"
-                }
-                labelFormatter={(label) =>
-                  `Month: ${label}`
-                }
-              />
-              <Legend />
-              <ReferenceLine
-                x="Apr"
-                stroke="#ef4444"
-                strokeDasharray="3 3"
-                label="Current Date"
-              />
-              <Line
-                key="goal-line"
-                type="monotone"
-                dataKey="goal"
-                stroke="#3b82f6"
-                strokeWidth={2}
-                name="Goal Line"
-                dot={false}
-              />
-              <Line
-                key="actual-line"
-                type="monotone"
-                dataKey="actual"
-                stroke="#10b981"
-                strokeWidth={3}
-                name="Actual Planted"
-                connectNulls={false}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <div style={{ width: "100%", height: 350 }}>
+            {isMounted && (
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={chartData}>
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="#e5e7eb"
+                  />
+                  <XAxis dataKey="month" stroke="#6b7280" />
+                  <YAxis
+                    stroke="#6b7280"
+                    tickFormatter={(value) =>
+                      `${(value / 1000).toFixed(0)}k`
+                    }
+                  />
+                  <Tooltip
+                    formatter={(value: any) =>
+                      value ? value.toLocaleString() : "N/A"
+                    }
+                    labelFormatter={(label) =>
+                      `Month: ${label}`
+                    }
+                  />
+                  <Legend />
+                  <ReferenceLine
+                    x="Apr"
+                    stroke="#ef4444"
+                    strokeDasharray="3 3"
+                    label="Current Date"
+                  />
+                  <Line
+                    key="goal-line"
+                    type="monotone"
+                    dataKey="goal"
+                    stroke="#3b82f6"
+                    strokeWidth={2}
+                    name="Goal Line"
+                    dot={false}
+                  />
+                  <Line
+                    key="actual-line"
+                    type="monotone"
+                    dataKey="actual"
+                    stroke="#10b981"
+                    strokeWidth={3}
+                    name="Actual Planted"
+                    connectNulls={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            )}
+          </div>
         </div>
 
           {/* District Performance Table + Gemini Insight */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">
-                  District Performance & Projections
-                </h3>
-                <p className="text-xs text-gray-500 italic">
-                  Click a district to view its progress
-                </p>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
-                        District
-                      </th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
-                        Annual Target
-                      </th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
-                        Trees Planted
-                      </th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
-                        Status
-                      </th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
-                        Est. Completion
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {districtData.map((district, index) => (
-                      <tr
-                        key={index}
-                        onClick={() =>
-                          setSelectedDistrict(
-                            district.district,
-                          )
-                        }
-                        className={`border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition ${
-                          selectedDistrict ===
-                          district.district
-                            ? "bg-blue-50 border-l-4 border-l-blue-600"
-                            : ""
-                        }`}
-                      >
-                        <td className="py-3 px-4 font-medium text-gray-800">
-                          {district.district}
-                        </td>
-                        <td className="py-3 px-4 text-gray-600">
-                          {district.target.toLocaleString()}
-                        </td>
-                        <td className="py-3 px-4 text-gray-600">
-                          {district.planted.toLocaleString()}
-                        </td>
-                        <td className="py-3 px-4">
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(district.status)}`}
-                          >
-                            {district.status === "on-track"
-                              ? "On Track"
-                              : district.status ===
-                                  "at-risk"
-                                ? "At Risk"
-                                : "Delayed"}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 text-gray-600 text-sm">
-                          {district.completion}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+          <div className="grid grid-cols-1 lg:grid-cols-10 gap-6">
+            <div className="lg:col-span-7">
+              <BarChartComponent />
             </div>
 
             {/* Gemini Insight Card */}
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-sm border border-blue-200 p-6">
+            <div className="lg:col-span-3 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-sm border border-blue-200 p-6">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                   <svg
