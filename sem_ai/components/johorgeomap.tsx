@@ -5,7 +5,6 @@ import { geoCentroid } from "d3-geo";
 import geoData from '@/data/malaysia.district.json'
 
 import { districtData } from "@/data/districts";
-import { getGeographyCentroid } from "@vnedyalk0v/react19-simple-maps";
 import { useRef, useState } from "react";
 
 interface DistrictType {
@@ -26,7 +25,7 @@ export default function CustomMap({ onDistrictClick }: ChildProps) {
     const [districtList, setDistrictList] = useState<DistrictType[]>([])
 
     return (
-        <div style={{ width: "100%", margin: "0 auto" }} className="overflow-visible">
+        <div className="overflow-visible w-auto m-auto">
         <ComposableMap
             
             projectionConfig={{
@@ -50,6 +49,10 @@ export default function CustomMap({ onDistrictClick }: ChildProps) {
                                     setCurrentDistrict(geo.id)
                                     setDistrictList(districtData.filter(d => d.city.includes(geo.id)))
                                 }}
+                                onMouseLeave={() => {
+                                    setCurrentDistrict('')
+                                    setDistrictList([])
+                                }}
                                 className="fill-slate-200 stroke-slate-500 stroke-[0.75px] outline-none transition-colors duration-150 ease-in-out hover:fill-emerald-500 hover:stroke-white hover:stroke-[1.2px] hover:cursor-pointer active:fill-emerald-700"
                             />
                         )
@@ -67,16 +70,14 @@ export default function CustomMap({ onDistrictClick }: ChildProps) {
                         return (
                            <Marker coordinates={geoCentroid(geo)}>
                                 { currentDistrict === geo.id && 
-                                districtList.map((pbt, i) => (
-                                    <text
-                                    key={i}
+                                <text
+                                    key={geo.id}
                                     textAnchor="middle"
-                                    y={i * 24} // Stack vertically by index (i * line-height)
                                     className="fill-slate-900 text-3 font-bold pointer-events-none select-none"
-                                    >
-                                    {pbt.district}
-                                    </text>
-                                ))}
+                                >
+                                        {geo.properties.name}
+                                </text>
+                                }
                             </Marker>
                         )
                     }

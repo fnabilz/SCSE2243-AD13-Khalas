@@ -8,7 +8,7 @@ export default function SubmitReportPage() {
   const steps = ["Zone", "Agency", "Species", "Quantity", "Date"]
 
   // Mock Fake Backend State: Simulating a user logged in under the 'Pontian' PBT
-  const [currentUserPBT] = useState("Pontian")
+  const [currentUserPBT] = useState("MPPn (Pontian)")
 
   return (
     <div className="flex flex-col min-h-screen w-full">
