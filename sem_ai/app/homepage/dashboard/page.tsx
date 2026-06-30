@@ -82,11 +82,6 @@ export default function DashboardPage() {
             <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Dashboard</h1>
             <p className="text-sm text-slate-500 mt-1">Welcome back! Here is a summary of SemAI's system health today.</p>
           </div>
-          <div className="flex items-center gap-3">
-            <Button className="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-medium">
-              <Plus className="h-4 w-4" /> Create Report
-            </Button>
-          </div>
         </div>
 
         {/* 3. METRIC CARDS ROW */}
