@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/navbar";
+import ChatFAB from "@/components/ai-chatbot";
 
 export const metadata: Metadata = {
   title: "SemAI",
