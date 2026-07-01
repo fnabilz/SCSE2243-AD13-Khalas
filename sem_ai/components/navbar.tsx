@@ -30,7 +30,7 @@ export default function Navbar() {
     const pageName = usePathname()
 
     return (
-       <div className='object-center shadow-md inline-flex h-18 w-screen'>
+       <div className='object-center shadow-md inline-flex h-18 w-screen bg-blue-1 z-10'>
             <nav className='flex font-medium'>
                 <ul className='px-10 flex text-lg items-center w-screen'>
                     { renderNav(pageName) }

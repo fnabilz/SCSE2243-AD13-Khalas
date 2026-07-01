@@ -1,21 +1,29 @@
+'use client'
 
 import { ArrowRight, Import} from 'lucide-react'
 import { Button } from '@/components/button'
 import Link from 'next/link'
 import '@/app/globals.css'
+import { useState } from 'react'
 
 export default function Page() {
+    const [signing, setSigning] = useState<boolean>(false)
+
+    function onSignClick() {
+        setSigning(true)
+    }
+
     return (
         <div className='flex grow items-center justify-center px-4 py-12 bg-white'>
             {/*White*/}
 
             {/* The Card Container */}
-            <div className='w-full max-w-md space-y-8 rounded-2xl border border-slate-400/30 bg-slate-200/40 p-8 backdrop-blur-md shadow-xl text-slate-900'>
+            <div className='w-full max-w-md space-y-8 rounded-2xl border border-slate-400/30 bg-slate-200/40 p-8  text-slate-900'>
                 
                 {/* Header */}
                 <div className="text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-zinc-900">Welcome Back</h2>
-                    <p className="mt-2 text-sm text-gray-400">
+                    <p className="mt-2 text-sm text-gray-600">
                         Enter your credentials to access SemAI
                     </p>
                 </div>
@@ -63,15 +71,12 @@ export default function Page() {
                         </label>
                         </div>
                         <a href="/contact-admin" className="font-medium text-green-600 hover:text-green-500">
-                        Forgot password?
+                            Forgot password?
                         </a>
                     </div>
 
-                    <button
-                        type="submit"
-                        className="w-full rounded-lg bg-green-700 py-2.5 font-semibold text-white transition-colors hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-black"
-                    >
-                        Sign In
+                    <button type="submit" onClick={onSignClick} className="w-full rounded-lg bg-green-700 py-2.5 font-semibold text-white transition-colors hover:bg-green-800">
+                        { signing ? 'Signing...' : 'Sign In'}
                     </button>
                 </form>
 

@@ -4,7 +4,7 @@ import '@/app/globals.css'
 
 import { Button } from '@/components/button'
 
-import { useActionState, useRef, useState } from 'react'
+import { useActionState, useEffect, useRef, useState } from 'react'
 
 import { districtData, districtProgressData } from '@/data/districts'
 import { progressData } from '@/data/charts'
@@ -24,15 +24,16 @@ interface DistrictType {
 
 
 export default function AnalyticsPage() {
+
     const [selectedDistrict, setSelectedDistrict] = useState<string>("all");
-
-    const selectedDistrictData = selectedDistrict !== "all" ? districtData.find((d) => d.district === selectedDistrict) : null;
-
-
     const [districtList, setDistrictList] = useState<DistrictType[]>([])
     const [districtName, setDistrictName] = useState<string>('')
-    const [showPlanting, setShowPlanting] = useState(false)
+    const [showPlanting, setShowPlanting] = useState<string>('')
     const [plantingFilter, setPlantingFilter] = useState<string>('all')
+
+    useEffect(() => {
+        setShowPlanting(selectedDistrict)
+    }, [selectedDistrict])
 
     const getStatusColor = (status: string) => {
         switch (status) {
@@ -104,8 +105,10 @@ export default function AnalyticsPage() {
                                 <tr
                                 key={index}
                                 onClick={() => {
-                                    setSelectedDistrict(district.district)
-                                    setShowPlanting(district.district === 'MBJB (Johor Bahru)')
+                                    if (selectedDistrict === district.district)
+                                        setSelectedDistrict('')
+                                    else 
+                                        setSelectedDistrict(district.district)
                                 }}
                                 className={`border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition ${
                                     selectedDistrict === district.district
@@ -139,19 +142,19 @@ export default function AnalyticsPage() {
         </div>
         </div>
 
-        {showPlanting && (
+        {showPlanting === 'MBJB (Johor Bahru)' && (
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
                 <div className="flex items-center justify-between mb-4">
                 <div>
                     <h3 className="text-lg font-semibold text-gray-800">
-                    Planting Records — MBJB (Johor Bahru)
+                        Planting Records — MBJB (Johor Bahru)
                     </h3>
                     <p className="text-xs text-neutral-400 mt-0.5">
-                    {mbjbPlantingData.length} records · {mbjbPlantingData.reduce((sum, r) => sum + r.amount, 0).toLocaleString()} trees planted
+                        {mbjbPlantingData.length} records · {mbjbPlantingData.reduce((sum, r) => sum + r.amount, 0).toLocaleString()} trees planted
                     </p>
                 </div>
                 <button
-                    onClick={() => setShowPlanting(false)}
+                    onClick={() => setShowPlanting('')}
                     className="h-8 px-3 text-sm rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors"
                 >
                     Close
