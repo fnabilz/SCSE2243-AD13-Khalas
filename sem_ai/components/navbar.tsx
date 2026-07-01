@@ -1,25 +1,43 @@
-import Image from 'next/image'
-import Link from 'next/link'
+'use client'
+
 import logo_image from '../public/semai-logo.svg'
 
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
+const navItems = [
+  { name: 'Home', href: '/', },
+  { name: 'Login', href: '/login', },
+  { name: 'Contacts', href: '/contact-admin', },
+]
+
+function renderNav(currentPage: string) {
+
+    return navItems.map((item, id) => {
+        const pageName = item.name
+        const pageRef = item.href
+
+        return ( 
+            <Link key={ id } href={ pageRef }  className={`px-4 py-5 hover:bg-blue-3 default:bg-blue-1 text-white ${ currentPage === pageRef ? 'border-b-5 border-blue-2' : 'border-b-0' }`}>
+                { pageName }
+            </Link>
+        )
+    })
+}
+
 export default function Navbar() {
+    const pageName = usePathname()
+
     return (
-       <div className='object-center py-3 shadow-md inline-flex h-21 w-screen'>
+       <div className='object-center shadow-md inline-flex h-18 w-screen'>
             <nav className='flex font-medium'>
-                <ul className='px-10 flex gap-2 text-lg items-center w-screen'>
-                    <li><Link href='/'
-                        className='rounded-xl p-4 hover:bg-blue-3 default:bg-blue-1 text-white'
-                        >Home</Link></li>
-                    <li><Link href='/login'
-                        className='rounded-xl p-4 hover:bg-blue-3 default:bg-blue-1 text-white'
-                        >Login</Link></li>
-                    <li><Link href='/contact-admin'
-                        className='rounded-xl p-4 hover:bg-blue-3 default:bg-blue-1 text-white'
-                        >Contacts</Link></li>
+                <ul className='px-10 flex text-lg items-center w-screen'>
+                    { renderNav(pageName) }
                 </ul>
             </nav>
             <Image 
-                className='h-15 absolute w-37 inset-x-0 mx-auto'
+                className='h-18 absolute w-30 inset-x-0 mx-auto object-center'
                 src={logo_image}
                 alt="Logo of the system"
             />

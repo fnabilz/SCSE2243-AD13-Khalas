@@ -1,4 +1,4 @@
-const species = [
+export const species: string[] = [
   "Angsana",
   "Rain Tree",
   "Yellow Flame",

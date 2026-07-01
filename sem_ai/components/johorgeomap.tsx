@@ -5,7 +5,7 @@ import { geoCentroid } from "d3-geo";
 import geoData from '@/data/malaysia.district.json'
 
 import { districtData } from "@/data/districts";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 interface DistrictType {
   district: string,
