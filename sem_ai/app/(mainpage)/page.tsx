@@ -1,5 +1,6 @@
+'use client'
 
-import { ArrowRight, Import} from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/button'
 import Link from 'next/link'
 import '@/app/globals.css'
