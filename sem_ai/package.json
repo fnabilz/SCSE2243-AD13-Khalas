@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.0",
+    "@supabase/supabase-js": "^2.110.0",
     "@vnedyalk0v/react19-simple-maps": "^2.0.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -35,6 +37,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.7",
     "nodemon": "^3.1.14",
+    "supabase": "^2.109.0",
     "tailwindcss": "^4",
     "typescript": "^5.9.3"
   }

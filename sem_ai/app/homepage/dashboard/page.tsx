@@ -146,7 +146,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Gemini Insight Card */}
-            <div className="lg:col-span-3 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-sm border border-blue-200 p-6">
+            <div className="lg:col-span-3 bg-linear-to-br from-blue-50 to-indigo-50 rounded-xl shadow-sm border border-blue-200 p-6">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                   <svg

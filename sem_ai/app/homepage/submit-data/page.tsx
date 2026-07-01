@@ -1,14 +1,48 @@
 "use client"
 
 import { Building, Calendar, MapPinPen, Plus, Sigma, Trees, Upload } from 'lucide-react'
-import { useState } from 'react'
+import React, { useEffect, useState, useRef, ChangeEvent } from 'react'
 import { Button } from '@/components/button'
 import { districts } from '@/data/districts'
-import { species } from '@/data/species'
+import { API_ENDPOINTS } from '@/lib/endpoints'
 
 export default function SubmitReportPage() {
 
   const [addSpeciesOption, setSpeciesOption] = useState<boolean>(false)
+  const [speciesData, setSpeciesData] = useState<any[]>()
+  const filledData = useRef<any>({
+    municipality: '',
+    agency: '',
+    species: '',
+    quantity: 0,
+    planted_at: '',
+  })
+
+  function handleForm(e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) {
+    const target = e.target
+    const id = target.id
+    if (id === 'quantity')
+      filledData.current[id] = Number(target.value)
+    else
+      filledData.current[id] = target.value
+  }
+
+  async function submitForm() {
+    try {
+      const response = await fetch(API_ENDPOINTS.records.post, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(filledData.current)
+      })
+      const data = await response.json()
+      
+    }
+    catch(error) {
+      console.error(error)
+    }
+  }
+
+
 
   function addNewSpecies() {
     setSpeciesOption(!addSpeciesOption)
@@ -16,9 +50,9 @@ export default function SubmitReportPage() {
 
   function renderSpeciesOptions() {
     return (
-      species.map((item, id) => {
+      speciesData?.map((item) => {
         return (
-          <option key={id}>{ item }</option>
+          <option key={item.id}>{ item.name }</option>
         )
       })
     )
@@ -33,6 +67,22 @@ export default function SubmitReportPage() {
       })
     )
   }
+
+  async function loadSpecies() {
+    try {
+      const response = await fetch(API_ENDPOINTS.species.get)
+      const data = await response.json()
+
+      setSpeciesData(data)
+    }
+    catch(error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    loadSpecies()
+  }, [])
 
   return (
     <div className="min-h-screen w-full">
@@ -80,7 +130,7 @@ export default function SubmitReportPage() {
               <div>
                 <label className="block text-sm font-medium text-slate-600 mb-2">Municipality (Auto-assigned)</label>
                 <div className="relative">
-                  <select className="w-full appearance-none px-4 py-3 text-base border border-slate-200 rounded-lg bg-white text-slate-700 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/10 transition">
+                  <select onChange={handleForm} id='municipality' className="w-full appearance-none px-4 py-3 text-base border border-slate-200 rounded-lg bg-white text-slate-700 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/10 transition">
                     <option value="" disabled selected>Select municipality…</option>
                     {renderMunicipalityOptions()}
                   </select>
@@ -98,6 +148,8 @@ export default function SubmitReportPage() {
                 <label className="block text-sm font-medium text-slate-600 mb-2">Agency Name</label>
                 <div className="relative">
                   <input 
+                    onChange={handleForm}
+                    id='agency'
                     type="text" 
                     placeholder="Enter full agency/developer/NGO name..."
                     className="w-full px-4 py-3 text-base border border-slate-200 rounded-lg bg-white text-zinc-900 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/10 transition"
@@ -115,7 +167,7 @@ export default function SubmitReportPage() {
               <div>
                 <label className="block text-sm font-medium text-slate-600 mb-2">Species</label>
                 <div className="relative">
-                  <select className="w-full appearance-none px-4 py-3 text-base border border-slate-200 rounded-lg bg-white text-slate-700 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/10 transition">
+                  <select onChange={handleForm} id='species' className="w-full appearance-none px-4 py-3 text-base border border-slate-200 rounded-lg bg-white text-slate-700 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/10 transition">
                     <option value="" disabled selected>Select species…</option>
                     {renderSpeciesOptions()}
                   </select>
@@ -161,6 +213,8 @@ export default function SubmitReportPage() {
                     Number of Trees Planted
                   </label>
                   <input
+                    onChange={handleForm} 
+                    id='quantity'
                     type="number"
                     placeholder="e.g. 150"
                     className="w-full px-4 py-3 text-base border border-slate-200 rounded-lg outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/10 hover:border-slate-300 transition text-zinc-900"
@@ -171,6 +225,8 @@ export default function SubmitReportPage() {
                     Date of Planting Activity
                   </label>
                   <input
+                    onChange={handleForm} 
+                    id='planted_at'
                     type="date"
                     className="w-full px-4 py-3 text-base border border-slate-200 rounded-lg outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/10 hover:border-slate-300 transition text-slate-700"
                   />
@@ -185,7 +241,7 @@ export default function SubmitReportPage() {
             <Button variant="ghost" className="text-sm text-slate-600 hover:text-zinc-900 hover:bg-slate-100 px-4 py-2.5">
               Clear Form
             </Button>
-            <Button className="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-medium text-sm px-6 py-2.5">
+            <Button onClick={submitForm} className="flex items-center gap-2 bg-green-700 hover:bg-green-800 text-white font-medium text-sm px-6 py-2.5">
               <Plus className="h-4 w-4" /> Submit Planting Report
             </Button>
           </div>
