@@ -68,10 +68,10 @@ export default function ReportsPage() {
       </div>
       
       {/* 1. Expanded the main container width to max-w-[1600px] */}
-      <div className="max-w-[1600px] mx-auto h-full flex flex-col lg:flex-row gap-6">
+      <div className="max-w-400 mx-auto h-full flex flex-col lg:flex-row gap-6">
 
         {/* 2. Left Panel: Changed from lg:w-1/3 to a fixed max width to give the table more room */}
-        <div className="w-full lg:w-[320px] xl:w-[360px] flex-shrink-0 bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-fit">
+        <div className="w-full lg:w-[320px] xl:w-90 shrink-0 bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-fit">
           <div className="flex items-center gap-2 mb-6">
             <FileBarChart className="w-6 h-6 text-blue-600" />
             <h3 className="text-xl font-semibold text-gray-800">
@@ -187,7 +187,7 @@ export default function ReportsPage() {
         </div>
 
         {/* 3. Right Panel: Changed to flex-1 so it dynamically fills all remaining width */}
-        <div className="flex-1 bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 flex flex-col justify-between min-h-[450px] overflow-hidden">
+        <div className="flex-1 bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 flex flex-col justify-between min-h-112.5 overflow-hidden">
           {!hasPreview && !isGenerating ? (
             <div className="flex-1 flex flex-col items-center justify-center text-center p-8 my-auto">
               <div className="p-4 bg-blue-50 rounded-full text-blue-600 mb-4">

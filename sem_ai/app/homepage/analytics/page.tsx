@@ -4,11 +4,9 @@ import '@/app/globals.css'
 
 import { Button } from '@/components/button'
 
-import { useActionState, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { districtData, districtProgressData } from '@/data/districts'
-import { progressData } from '@/data/charts'
-import { mbjbPlantingData, PlantingRecord } from '@/data/plantingData'
+import { mbjbPlantingData } from '@/data/plantingData'
 
 import JohorDistrictMap from '@/components/johorgeomap'
 
@@ -63,7 +61,7 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+        <div className="bg-transparent p-6 mb-8">
         <div className="flex gap-6">
             
             {/* Map — left side */}

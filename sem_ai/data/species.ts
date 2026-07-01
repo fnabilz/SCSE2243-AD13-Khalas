@@ -1,11 +1,13 @@
 export const species: string[] = [
-  "Angsana",
-  "Rain Tree",
-  "Yellow Flame",
-  "Tembusu",
-  "Sea Apple",
-  "Ketapang",
-  "Mahang",
-  "Meranti",
+  'Angsana (Pterocarpus indicus)',
+  'Rain Tree (Samanea saman)',
+  'Tembusu (Fagraea fragrans)',
+  'Yellow Flame (Peltophorum pterocarpum)',
+  'Sea Apple (Syzygium grande)',
+  'Simpoh Air (Dillenia suffruticosa)',
+  'Kelat Paya (Syzygium palembanicum)',
+  'Pulai (Alstonia angustiloba)',
+  'Meranti Merah (Shorea leprosula)',
+  'Kapur (Dryobalanops aromatica)',
 ];
 

@@ -36,10 +36,15 @@ interface ChildProps {
 export default function CustomMap({ onDistrictClick }: ChildProps) {
     const [currentDistrict, setCurrentDistrict] = useState<string>('')
     const [districtList, setDistrictList] = useState<DistrictType[]>([])
+    const [clickedDistrict, setClickedDistrict] = useState<string>('')
 
     function getCoordinates(geo: ExtendedGeometryCollection): Coordinates {
         const coordinates = geoCentroid(geo)
         return [createLongitude(coordinates[0]), createLatitude(coordinates[1])]
+    }
+
+    function onMapClick(districtName: string) {
+        setClickedDistrict(districtName)
     }
 
     function renderMap()  {
@@ -53,6 +58,7 @@ export default function CustomMap({ onDistrictClick }: ChildProps) {
                             geography={geo}
                             onClick={() => {
                                 onDistrictClick(districtList, geo.properties?.name)
+                                onMapClick(geo.id?.toString() ?? '')
                             }}
                             onMouseEnter={() => {
                                 setCurrentDistrict(geo.id?.toString() ?? '')
@@ -62,7 +68,7 @@ export default function CustomMap({ onDistrictClick }: ChildProps) {
                                 setCurrentDistrict('')
                                 setDistrictList([])
                             }}
-                            className="fill-slate-200 stroke-slate-500 stroke-[0.75px] outline-none transition-colors duration-150 ease-in-out hover:fill-[#F53] hover:stroke-white hover:stroke-[1.2px] hover:cursor-pointer active:fill-emerald-700"/>
+                            className={`stroke-white stroke-[.75px] outline-none transition-colors duration-150 ease-in-out hover:fill-[#F53] hover:stroke-[2px] hover:cursor-pointer ${clickedDistrict === geo.id ? 'fill-[#F53]' : 'fill-slate-400'}`}/>
                         )
                     })
                 } 
@@ -98,7 +104,7 @@ export default function CustomMap({ onDistrictClick }: ChildProps) {
     return (
         <div className="overflow-visible w-auto m-auto">
         <ComposableMap
-            width={400}
+            width={300}
             height={350}
             projectionConfig={{
                 scale: 10000, 

@@ -1,6 +1,5 @@
 
 import { ArrowRight, Import} from 'lucide-react'
-import { Button } from '@/components/button'
 import Link from 'next/link'
 import '@/app/globals.css'
 import { Mail, User, TreePine, Circle } from 'lucide-react';
@@ -38,12 +37,12 @@ export default function Page() {
                     </div>
 
                     {/* Action Button */}
-                    <a 
+                    <Link 
                     href="mailto:fikri@semai.com"
                     className="rounded-lg bg-white p-2 text-slate-600 shadow-sm border border-slate-200 hover:text-green-600 transition-colors"
                     >
                     <Mail size={20} />
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="flex items-center justify-between rounded-xl bg-white/60 p-4 shadow-sm">
@@ -64,21 +63,21 @@ export default function Page() {
                     </div>
 
                     {/* Action Button */}
-                    <a 
+                    <Link 
                     href="mailto:azri@semai.com"
                     className="rounded-lg bg-white p-2 text-slate-600 shadow-sm border border-slate-200 hover:text-green-600 transition-colors"
                     >
                     <Mail size={20} />
-                    </a>
+                    </Link>
                 </div>
                 <div className="flex justify-center mt-6">
-                    <a 
+                    <Link 
                         href="/login" 
                         className="inline-flex items-center font-medium text-green-600 hover:text-green-500 transition-colors"
                     >
                         <span>Back to Login</span>
                         <ArrowRight className="ml-1.5" size={16} />
-                    </a>
+                    </Link>
                 </div>
             </div>
             

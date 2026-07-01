@@ -1,14 +1,3 @@
-export const species = [
-  "Angsana",
-  "Rain Tree",
-  "Yellow Flame",
-  "Tembusu",
-  "Sea Apple",
-  "Ketapang",
-  "Mahang",
-  "Meranti",
-];
-
 export interface PlantingRecord {
   id: string;
   agency: string;
